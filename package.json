@@ -1,24 +1,29 @@
 {
     "name": "lazy-init-value",
-    "type": "module",
-    "module": "dist/index.js",
+    "author": "Wzh <wzh@uvwee.com>",
+    "version": "1.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wzh19960613/lazy-init-value-js.git"
+    },
     "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "version": "1.0.0",
-    "description": "A library for lazy initialization of values, supporting both synchronous and asynchronous scenarios.",
-    "repository": "github:wzh19960613/lazy-init-value-js",
+    "module": "dist/index.js",
+    "devDependencies": {
+        "@types/bun": "^1.1.12",
+        "bun-plugin-dts": "^0.3.0"
+    },
+    "description": "Lazy initialization of values, supporting both synchronous and asynchronous scenarios",
     "keywords": [
         "lazy",
-        "init"
+        "init",
+        "value",
+        "delay"
     ],
-    "author": "Wzh <wzh@uvwee.com>",
     "license": "MIT",
     "scripts": {
         "build": "bun ./build.ts",
         "test": "bun test"
     },
-    "devDependencies": {
-        "@types/bun": "^1.1.11",
-        "bun-plugin-dts": "^0.3.0"
-    }
+    "type": "module",
+    "types": "dist/index.d.ts"
 }
