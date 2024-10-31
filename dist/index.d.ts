@@ -1,30 +1,41 @@
-export declare class LazyInitValueBase<T, INIT_FN> {
+declare class LazyInitValueBase<FN> {
 	static autoFreeze: boolean
-	protected _value?: T
-	protected _initFn?: INIT_FN
+	protected _initFn?: FN
 	protected _autoFreeze?: boolean
-	constructor(initFn: INIT_FN, autoFreeze?: boolean)
+	constructor(initFn: FN, autoFreeze?: boolean)
 	get inited(): boolean
-	reset(initFn: INIT_FN): void
+	reset(initFn: FN): void
 	freeze(): void
 }
-export declare class LazyInitValue<T> extends LazyInitValueBase<T, () => T> {
+export declare class LazyInitNull extends LazyInitValueBase<null> {
+	static get autoFreeze(): boolean
+	static set autoFreeze(autoFreeze: boolean)
+	constructor(autoFreeze?: boolean)
+	init(): boolean
+	get value(): null
+}
+export declare class LazyInitValue<T> extends LazyInitValueBase<() => T> {
+	#private
 	static get autoFreeze(): boolean
 	static set autoFreeze(autoFreeze: boolean)
 	constructor(initFn: () => T, autoFreeze?: boolean)
+	init(): boolean
 	get value(): T
 }
-export declare class LazyAsyncInitValue<T> extends LazyInitValueBase<T, () => Promise<T>> {
+export declare class LazyAsyncInitValue<T> extends LazyInitValueBase<() => Promise<T>> {
+	#private
 	static get autoFreeze(): boolean
 	static set autoFreeze(autoFreeze: boolean)
+	constructor(initFn: () => Promise<T>, autoFreeze?: boolean)
+	get initing(): boolean
+	value(): T | Promise<T>
+	init(): false | Promise<true>
+	get value_sync(): T | undefined
 	protected _initing?: true
 	protected _resolvers?: ((value: T) => void)[]
 	protected _rejections?: ((reason: any) => void)[]
-	constructor(initFn: () => Promise<T>, autoFreeze?: boolean)
-	get initing(): boolean
-	_init_value(): void
-	value(): T | Promise<T>
-	get value_sync(): T | undefined
+	protected _init_value(): void
+	protected _make_promise_and_init<R>(fn?: (resolve: (value: R) => void) => (value: T) => void): Promise<R>
 }
 
 export { }
